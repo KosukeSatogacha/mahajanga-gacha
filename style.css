@@ -1,0 +1,1102 @@
+/* =====================================================================
+ * 旧マジャンガ州 カードアルバム — スタイル
+ * テーマ：砂・テラコッタ・海の青緑による落ち着いた「旅の記録／図鑑」配色
+ * ===================================================================== */
+
+/* ---------- カラーパレット ---------- */
+:root {
+  --bg: #f4ece0;          /* 砂・パーチメント */
+  --bg-deep: #ede0cf;
+  --panel: #fffaf2;        /* アルバムのページ */
+  --panel-border: #e2d3bd;
+  --ink: #3a2f28;          /* 文字（こげ茶） */
+  --ink-soft: #7c6b5b;     /* 補助テキスト */
+  --terracotta: #c9663b;   /* アクセント（赤土） */
+  --teal: #2f7d7a;         /* アクセント（海） */
+  --teal-deep: #1f5d5a;
+  --shadow: 0 18px 44px rgba(74, 53, 33, 0.16);
+  --shadow-soft: 0 8px 20px rgba(74, 53, 33, 0.1);
+
+  /* レアリティ色 */
+  --c-ssr: #d4a017;        /* 金 */
+  --c-sr: #8b5cf6;         /* 紫 */
+  --c-r: #3b82f6;          /* 青 */
+  --c-n: #9b8c7a;          /* 灰（やや茶） */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  font-family:
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  line-height: 1.7;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% -8%, rgba(77, 179, 174, 0.18), transparent 38%),
+    radial-gradient(circle at 92% 4%, rgba(201, 102, 59, 0.20), transparent 36%),
+    linear-gradient(180deg, #2a2018 0%, #1b1410 100%);
+  background-attachment: fixed;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.app-shell {
+  width: min(100% - 32px, 1000px);
+  margin: 0 auto;
+  padding: 56px 0 96px;
+}
+
+/* ---------- ヘッダー ---------- */
+.hero {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  color: var(--teal);
+}
+
+/* 暗い背景の上に直接乗る見出しは明るい色にする */
+.hero .eyebrow,
+.result-section .eyebrow {
+  color: #5bbdb6;
+}
+
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0.06em;
+  color: #f6efe2;
+}
+
+h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  letter-spacing: 0.02em;
+}
+
+.hero__subtitle {
+  margin: 14px 0 0;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 700;
+  color: var(--terracotta);
+}
+
+.hero__description {
+  max-width: 620px;
+  margin: 8px auto 0;
+  color: #d8cbb6;
+  font-size: 0.95rem;
+}
+
+/* ---------- パネル共通 ---------- */
+.gacha-panel,
+.collection-section,
+.probability-section {
+  border: 1px solid var(--panel-border);
+  border-radius: 22px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+/* =====================================================================
+ * ガチャ
+ * ===================================================================== */
+.gacha-panel {
+  position: relative;
+  padding: clamp(24px, 5vw, 44px);
+  text-align: center;
+  /* チケットのような切れ込みで「旅のスタンプ台紙」感を出す */
+  background:
+    radial-gradient(circle at 50% 0%, rgba(47, 125, 122, 0.06), transparent 60%),
+    var(--panel);
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  text-align: left;
+}
+
+.status-label,
+.timer__label {
+  display: block;
+  margin: 0 0 2px;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.status-value {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.status-value--available {
+  color: var(--teal-deep);
+}
+
+.status-value--used {
+  color: var(--ink-soft);
+}
+
+.timer {
+  text-align: right;
+}
+
+.timer__value {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* スタンプ風の演出マーク */
+.stamp {
+  display: grid;
+  place-items: center;
+  margin: 34px auto 30px;
+}
+
+.stamp__ring {
+  display: grid;
+  width: 150px;
+  height: 150px;
+  border: 4px dashed var(--terracotta);
+  border-radius: 50%;
+  place-items: center;
+  background:
+    radial-gradient(circle at 35% 30%, #fff, rgba(201, 102, 59, 0.12) 70%);
+  box-shadow: var(--shadow-soft);
+  animation: stamp-pulse 2.6s ease-in-out infinite;
+}
+
+.stamp__mark {
+  font-size: 3.6rem;
+  color: var(--terracotta);
+}
+
+.draw-button {
+  width: min(100%, 420px);
+  padding: 17px 28px;
+  border: 0;
+  border-radius: 16px;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--terracotta), #b5512c);
+  box-shadow: 0 12px 26px rgba(201, 102, 59, 0.34);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+}
+
+.draw-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(201, 102, 59, 0.42);
+}
+
+.draw-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.draw-button:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 4px;
+}
+
+.draw-button:disabled {
+  cursor: not-allowed;
+  background: #c9bda9;
+  opacity: 0.85;
+  box-shadow: none;
+}
+
+.draw-button__main,
+.draw-button__sub {
+  display: block;
+}
+
+.draw-button__main {
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.draw-button__sub {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.notice {
+  margin: 16px 0 0;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+/* =====================================================================
+ * 写真カード（共通）— 5:7 の縦長を維持し、画像全体を表示する
+ * ===================================================================== */
+.photo-card {
+  --rarity-color: var(--c-n);
+  position: relative;
+  margin: 0;
+  border: 3px solid var(--rarity-color);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* レアリティごとの枠色 */
+.rarity--ssr {
+  --rarity-color: var(--c-ssr);
+}
+.rarity--sr {
+  --rarity-color: var(--c-sr);
+}
+.rarity--r {
+  --rarity-color: var(--c-r);
+}
+.rarity--n {
+  --rarity-color: var(--c-n);
+}
+
+/* SSRは金〜虹色のグラデ枠 */
+.photo-card.rarity--ssr {
+  border-color: transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #f6c945, #ff8fb0, #8b5cf6, #45c7c2, #f6c945) border-box;
+  box-shadow: 0 10px 26px rgba(212, 160, 23, 0.35);
+}
+
+.photo-card__frame {
+  /* 5:7（1000:1400）の比率を保持。画像全体が見えるよう contain。 */
+  aspect-ratio: 1000 / 1400;
+  display: grid;
+  place-items: center;
+  background: #efe7d9;
+}
+
+.photo-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 画像読み込み失敗時のプレースホルダー */
+.photo-card__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  background: repeating-linear-gradient(
+    45deg,
+    #eadfce,
+    #eadfce 10px,
+    #e3d6c1 10px,
+    #e3d6c1 20px
+  );
+}
+
+.photo-card__caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--panel);
+  border-top: 1px solid var(--panel-border);
+}
+
+.photo-card__name {
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+/* ---------- レアリティタグ ---------- */
+.rarity-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: var(--rarity-color, var(--c-n));
+  white-space: nowrap;
+}
+
+.rarity-tag.rarity--ssr {
+  color: #5a3d00;
+  background: linear-gradient(135deg, #f6c945, #ffe08a);
+}
+.rarity-tag.rarity--sr {
+  background: var(--c-sr);
+}
+.rarity-tag.rarity--r {
+  background: var(--c-r);
+}
+.rarity-tag.rarity--n {
+  background: var(--c-n);
+}
+.rarity-tag--hidden {
+  color: var(--ink-soft);
+  background: #d8cab4;
+}
+
+/* ---------- NEWバッジ ---------- */
+.new-badge {
+  position: absolute;
+  z-index: 3;
+  top: 8px;
+  left: 8px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--terracotta);
+  box-shadow: 0 4px 10px rgba(201, 102, 59, 0.4);
+}
+
+/* =====================================================================
+ * 抽選結果
+ * ===================================================================== */
+.result-section {
+  padding: 56px 0 8px;
+  text-align: center;
+}
+
+.result-header {
+  margin-bottom: 22px;
+}
+
+.result-header h2 {
+  color: #f6efe2;
+}
+
+.photo-card--large {
+  width: min(100%, 320px);
+  margin: 0 auto;
+  animation: card-enter 700ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+}
+
+.photo-card--large .photo-card__caption {
+  justify-content: center;
+}
+
+.photo-card--large .photo-card__name {
+  font-size: 1.1rem;
+}
+
+.result-message {
+  margin: 18px 0 0;
+  font-weight: 700;
+  color: #d8cbb6;
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+/* X投稿ボタン：黒基調でガチャボタン（赤土色）と明確に区別する */
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #fff;
+  background: #0b0b0b;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.share-button:hover {
+  transform: translateY(-2px);
+  background: #000;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+}
+
+.share-button:active {
+  transform: translateY(1px);
+}
+
+.share-button:focus-visible {
+  outline: 3px solid #5bbdb6;
+  outline-offset: 3px;
+}
+
+/* テキストの「X」ロゴ（非公式ロゴ画像は使わない） */
+.share-button__logo {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* カード画像保存ボタン：枠線主体の控えめなデザイン */
+.save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1.5px solid rgba(246, 239, 226, 0.5);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #f6efe2;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.save-button:hover {
+  transform: translateY(-2px);
+  border-color: var(--terracotta);
+  background: rgba(201, 102, 59, 0.16);
+}
+
+.save-button:active {
+  transform: translateY(1px);
+}
+
+.save-button:focus-visible {
+  outline: 3px solid #5bbdb6;
+  outline-offset: 3px;
+}
+
+.share-note {
+  margin: 12px auto 0;
+  max-width: 420px;
+  font-size: 0.76rem;
+  color: #c4b8a4;
+}
+
+.save-error {
+  margin: 10px auto 0;
+  max-width: 420px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ff9b86;
+}
+
+/* スマホでは押しやすいよう横幅を広げて縦並びにする */
+@media (max-width: 480px) {
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .share-button,
+  .save-button {
+    width: 100%;
+  }
+}
+
+/* =====================================================================
+ * コレクション（アルバム／図鑑）
+ * ===================================================================== */
+.collection-section {
+  margin-top: 48px;
+  padding: clamp(22px, 5vw, 40px);
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 18px;
+}
+
+.collection-count {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--terracotta);
+  font-variant-numeric: tabular-nums;
+}
+
+/* コンプリート率バー */
+.progress {
+  margin-bottom: 22px;
+}
+
+.progress__head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.progress__bar {
+  height: 12px;
+  border-radius: 999px;
+  background: #e6d8c2;
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--teal), var(--terracotta));
+  transition: width 500ms ease;
+}
+
+/* 絞り込み */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  margin-bottom: 26px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-group__label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filter-button {
+  padding: 6px 14px;
+  border: 1.5px solid var(--panel-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: #fff;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    color 140ms ease,
+    border-color 140ms ease;
+}
+
+.filter-button:hover {
+  border-color: var(--teal);
+}
+
+.filter-button:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.filter-button.is-active {
+  color: #fff;
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+/* レアリティ絞り込みボタンが選択中のときは各レアリティ色に */
+.filter-button--ssr.is-active {
+  color: #5a3d00;
+  background: var(--c-ssr);
+  border-color: var(--c-ssr);
+}
+.filter-button--sr.is-active {
+  background: var(--c-sr);
+  border-color: var(--c-sr);
+}
+.filter-button--r.is-active {
+  background: var(--c-r);
+  border-color: var(--c-r);
+}
+.filter-button--n.is-active {
+  background: var(--c-n);
+  border-color: var(--c-n);
+}
+
+/* グリッド */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.collection-empty {
+  margin: 24px 0 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+/* コレクションの1枚 */
+.collection-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 3px solid var(--rarity-color, var(--c-n));
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.collection-card.is-owned {
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.collection-card.is-owned:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.collection-card.is-owned:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* SSR枠（コレクションでも金〜虹） */
+.collection-card.rarity--ssr {
+  border-color: transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #f6c945, #ff8fb0, #8b5cf6, #45c7c2, #f6c945) border-box;
+}
+
+.collection-card .photo-card__frame {
+  aspect-ratio: 1000 / 1400;
+  display: grid;
+  place-items: center;
+  background: #efe7d9;
+}
+
+.collection-card .photo-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.collection-card__caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--panel);
+  border-top: 1px solid var(--panel-border);
+}
+
+.collection-card__name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.collection-card__name--hidden {
+  color: var(--ink-soft);
+}
+
+/* 所持枚数バッジ */
+.collection-card__count {
+  position: absolute;
+  z-index: 3;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(58, 47, 40, 0.82);
+}
+
+/* 未獲得カードの裏面（暗いシルエット） */
+.collection-card.is-locked {
+  border-color: #c9bba4;
+  filter: none;
+}
+
+.photo-card__frame--back {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #7c6b5b,
+      #7c6b5b 14px,
+      #6f5f50 14px,
+      #6f5f50 28px
+    );
+}
+
+.card-back__mark {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =====================================================================
+ * 提供割合
+ * ===================================================================== */
+.probability-section {
+  margin-top: 22px;
+  padding: 24px clamp(22px, 5vw, 32px);
+}
+
+.probability-section h2 {
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+}
+
+.probability-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.probability-list div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.probability-list strong {
+  margin-left: auto;
+  color: var(--ink);
+}
+
+.rarity-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c-n);
+}
+
+.rarity-dot.rarity--ssr {
+  background: var(--c-ssr);
+}
+.rarity-dot.rarity--sr {
+  background: var(--c-sr);
+}
+.rarity-dot.rarity--r {
+  background: var(--c-r);
+}
+.rarity-dot.rarity--n {
+  background: var(--c-n);
+}
+
+/* =====================================================================
+ * 抽選演出ダイアログ
+ * ===================================================================== */
+.reveal-dialog {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  color: #fff;
+  background: rgba(58, 47, 40, 0.92);
+}
+
+.reveal-dialog[open] {
+  display: grid;
+  place-items: center;
+}
+
+.reveal-dialog::backdrop {
+  background: rgba(58, 47, 40, 0.86);
+}
+
+.reveal-dialog__content {
+  padding: 30px;
+  text-align: center;
+}
+
+.reveal-dialog__text {
+  margin: 0 0 24px;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-weight: 800;
+}
+
+.reveal-loader {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.reveal-loader span {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #f6c945;
+  animation: loader 700ms ease-in-out infinite alternate;
+}
+
+.reveal-loader span:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.reveal-loader span:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+/* =====================================================================
+ * カード詳細モーダル
+ * ===================================================================== */
+.detail-dialog {
+  width: min(92vw, 440px);
+  max-width: 440px;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 30px 80px rgba(58, 47, 40, 0.45);
+}
+
+.detail-dialog::backdrop {
+  background: rgba(58, 47, 40, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.detail-dialog__content {
+  position: relative;
+  padding: 18px;
+}
+
+.detail-dialog__close {
+  position: absolute;
+  z-index: 4;
+  top: 10px;
+  right: 10px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #fff;
+  background: rgba(58, 47, 40, 0.78);
+  cursor: pointer;
+}
+
+.detail-dialog__close:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.detail-dialog__frame {
+  aspect-ratio: 1000 / 1400;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #efe7d9;
+  overflow: hidden;
+}
+
+.detail-dialog__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.detail-dialog__info {
+  padding: 16px 6px 6px;
+}
+
+.detail-dialog__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.detail-dialog__count {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--terracotta);
+}
+
+.detail-dialog__name {
+  margin: 0 0 8px;
+  font-size: 1.3rem;
+}
+
+.detail-dialog__description {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* =====================================================================
+ * アニメーション
+ * ===================================================================== */
+@keyframes stamp-pulse {
+  0%, 100% {
+    transform: scale(0.97) rotate(-3deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.04) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+@keyframes loader {
+  to {
+    transform: translateY(-12px) scale(1.1);
+    background: var(--terracotta);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =====================================================================
+ * レスポンシブ（スマートフォン）
+ * ===================================================================== */
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 22px, 1000px);
+    padding-top: 40px;
+  }
+
+  .status-row {
+    align-items: flex-start;
+  }
+
+  /* スマホは2列 */
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .probability-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 440px) {
+  .status-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .timer {
+    text-align: left;
+  }
+
+  /* 狭い画面は1列でカードを大きく見せる */
+  .collection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .probability-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

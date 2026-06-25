@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    セキュリティ：HTTPSを強制し、http:// のリソースを読み込ませない。
+    リソースは同一オリジン（相対パス）のみ。インラインスクリプトは使用しない。
+  -->
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+  >
+  <meta
+    name="description"
+    content="1日1回引ける、旧マジャンガ州のカードを集める旅の記録カードアルバム"
+  >
+  <title>旧マジャンガ州 カードアルバム｜旅の記録</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <!-- ============ ヘッダー ============ -->
+    <header class="hero">
+      <p class="eyebrow">MAHAJANGA</p>
+      <h1>旧マジャンガ州ガチャ</h1>
+      <p class="hero__subtitle">旧マジャンガ州を巡って集めるカードアルバム</p>
+      <p class="hero__description">
+        1日1回ガチャを引いて、旧マジャンガ州のカードを集めよう！
+      </p>
+    </header>
+
+    <!-- ============ ガチャ ============ -->
+    <section class="gacha-panel" aria-labelledby="gacha-title">
+      <h2 id="gacha-title" class="visually-hidden">ガチャ</h2>
+
+      <div class="status-row">
+        <div>
+          <p class="status-label">本日のガチャ</p>
+          <p id="draw-status" class="status-value">確認中...</p>
+        </div>
+        <div class="timer" aria-live="polite">
+          <span class="timer__label">次回まで</span>
+          <span id="countdown" class="timer__value">--:--:--</span>
+        </div>
+      </div>
+
+      <div class="stamp" aria-hidden="true">
+        <div class="stamp__ring">
+          <span class="stamp__mark">★</span>
+        </div>
+      </div>
+
+      <button id="draw-button" class="draw-button" type="button">
+        <span class="draw-button__main">ガチャを引く</span>
+        <span class="draw-button__sub">本日あと1回</span>
+      </button>
+
+      <p class="notice">抽選状態とコレクションはこのブラウザに保存されます。</p>
+    </section>
+
+    <!-- ============ 抽選結果 ============ -->
+    <section id="result-section" class="result-section" aria-labelledby="result-title" hidden>
+      <div class="result-header">
+        <p class="eyebrow">TODAY'S CARD</p>
+        <h2 id="result-title">獲得カード</h2>
+      </div>
+
+      <figure class="photo-card photo-card--large" id="result-card" tabindex="-1">
+        <span id="result-new-badge" class="new-badge" hidden>NEW</span>
+        <div class="photo-card__frame">
+          <img id="result-image" class="photo-card__image" src="" alt="" decoding="async">
+          <div class="photo-card__placeholder" hidden>
+            <span>画像を読み込めませんでした</span>
+          </div>
+        </div>
+        <figcaption class="photo-card__caption">
+          <span id="result-rarity" class="rarity-tag"></span>
+          <span id="result-name" class="photo-card__name"></span>
+        </figcaption>
+      </figure>
+
+      <p id="result-message" class="result-message" aria-live="polite"></p>
+
+      <div class="result-actions">
+        <button
+          id="share-button"
+          class="share-button"
+          type="button"
+          aria-label="Xに結果を投稿する（外部サイトが新しいウィンドウで開きます）"
+        >
+          <span class="share-button__logo" aria-hidden="true">X</span>
+          <span>Xで結果を投稿</span>
+        </button>
+        <button
+          id="save-button"
+          class="save-button"
+          type="button"
+          aria-label="獲得したカード画像をPNG形式で保存する"
+        >
+          カード画像を保存
+        </button>
+      </div>
+
+      <p class="share-note">
+        カード画像を添付する場合は、画像を保存してXの投稿画面で追加してください
+      </p>
+      <p id="share-error" class="save-error" role="alert" hidden></p>
+      <p id="save-error" class="save-error" role="alert" hidden></p>
+    </section>
+
+    <!-- ============ コレクション ============ -->
+    <section class="collection-section" aria-labelledby="collection-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">COLLECTION ALBUM</p>
+          <h2 id="collection-title">カードコレクション</h2>
+        </div>
+        <p id="collection-count" class="collection-count">0 / 0</p>
+      </div>
+
+      <div class="progress" aria-label="コンプリート率">
+        <div class="progress__head">
+          <span>コンプリート率</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress__bar">
+          <div id="progress-fill" class="progress__fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- 絞り込み -->
+      <div class="filters">
+        <div class="filter-group" role="group" aria-label="レアリティで絞り込み">
+          <span class="filter-group__label">レアリティ</span>
+          <div class="filter-buttons" id="rarity-filters">
+            <button type="button" class="filter-button is-active" data-rarity="ALL">すべて</button>
+            <button type="button" class="filter-button filter-button--ssr" data-rarity="SSR">SSR</button>
+            <button type="button" class="filter-button filter-button--sr" data-rarity="SR">SR</button>
+            <button type="button" class="filter-button filter-button--r" data-rarity="R">R</button>
+            <button type="button" class="filter-button filter-button--n" data-rarity="N">N</button>
+          </div>
+        </div>
+        <div class="filter-group" role="group" aria-label="所持状況で絞り込み">
+          <span class="filter-group__label">所持</span>
+          <div class="filter-buttons" id="owned-filters">
+            <button type="button" class="filter-button is-active" data-owned="ALL">すべて</button>
+            <button type="button" class="filter-button" data-owned="OWNED">獲得済み</button>
+            <button type="button" class="filter-button" data-owned="UNOWNED">未獲得</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="collection-grid" class="collection-grid"></div>
+      <p id="collection-empty" class="collection-empty" hidden>条件に合うカードがありません。</p>
+    </section>
+
+    <!-- ============ 提供割合 ============ -->
+    <section class="probability-section" aria-labelledby="probability-title">
+      <h2 id="probability-title">提供割合</h2>
+      <div class="probability-list" id="probability-list"></div>
+    </section>
+  </main>
+
+  <!-- ============ 抽選演出 ============ -->
+  <dialog id="reveal-dialog" class="reveal-dialog" aria-labelledby="reveal-title">
+    <div class="reveal-dialog__content">
+      <p id="reveal-title" class="reveal-dialog__text">カードを抽選しています...</p>
+      <div class="reveal-loader" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ============ カード詳細モーダル ============ -->
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-name">
+    <div class="detail-dialog__content">
+      <button type="button" id="detail-close" class="detail-dialog__close" aria-label="閉じる">×</button>
+      <div class="detail-dialog__frame">
+        <img id="detail-image" class="detail-dialog__image" src="" alt="" decoding="async">
+        <div class="photo-card__placeholder" id="detail-placeholder" hidden>
+          <span>画像を読み込めませんでした</span>
+        </div>
+      </div>
+      <div class="detail-dialog__info">
+        <div class="detail-dialog__topline">
+          <span id="detail-rarity" class="rarity-tag"></span>
+          <span id="detail-count" class="detail-dialog__count"></span>
+        </div>
+        <h3 id="detail-name" class="detail-dialog__name"></h3>
+        <p id="detail-description" class="detail-dialog__description"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="./site-config.js"></script>
+  <script src="./cards.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
