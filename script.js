@@ -1045,4 +1045,15 @@ function initializeApp() {
   window.setInterval(updateCountdown, 1000);
 }
 
-initializeApp();
+// 初期化中に想定外のエラーが起きても、原因が分かるよう必ずコンソールへ出す。
+// （cards.js が読み込まれていない等の場合に、何が起きたか追跡しやすくする）
+try {
+  if (typeof MAHAJANGA_CARDS === "undefined") {
+    throw new Error(
+      "カードデータ(MAHAJANGA_CARDS)が読み込まれていません。index.htmlで cards.js を script.js より先に読み込んでいるか確認してください。",
+    );
+  }
+  initializeApp();
+} catch (error) {
+  console.error("初期化に失敗しました:", error);
+}

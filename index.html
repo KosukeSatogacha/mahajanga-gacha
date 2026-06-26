@@ -16,7 +16,8 @@
     content="1日1回引ける、旧マジャンガ州のカードを集める旅の記録カードアルバム"
   >
   <title>旧マジャンガ州 カードアルバム｜旅の記録</title>
-  <link rel="stylesheet" href="./style.css">
+  <!-- ?v= はキャッシュ対策のバージョン番号。内容を更新したら数字を増やす。 -->
+  <link rel="stylesheet" href="./style.css?v=20260626">
 </head>
 <body>
   <main class="app-shell">
@@ -193,8 +194,9 @@
     </div>
   </dialog>
 
-  <script src="./site-config.js"></script>
-  <script src="./cards.js"></script>
-  <script src="./script.js"></script>
+  <!-- ?v= はキャッシュ対策。cards.js は script.js より先に読み込む。 -->
+  <script src="./site-config.js?v=20260626"></script>
+  <script src="./cards.js?v=20260626"></script>
+  <script src="./script.js?v=20260626"></script>
 </body>
 </html>

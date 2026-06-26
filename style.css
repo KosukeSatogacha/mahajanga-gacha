@@ -28,6 +28,15 @@
   box-sizing: border-box;
 }
 
+/*
+  閉じている <dialog> は必ず非表示にする。
+  一部ブラウザではブラウザ標準スタイルが効かず、ダイアログの中身
+  （例：「カードを抽選しています…」）がページ内に表示されてしまうのを防ぐ。
+*/
+dialog:not([open]) {
+  display: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
