@@ -37,6 +37,16 @@ dialog:not([open]) {
   display: none;
 }
 
+/*
+  hidden 属性は必ず非表示にする。
+  .photo-card__placeholder などに display: grid 等を指定していると、
+  作者スタイルがブラウザ標準の [hidden]{display:none} を上書きしてしまい、
+  hidden 属性を付けても要素（エラー文など）が消えない。これを防ぐ。
+*/
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
