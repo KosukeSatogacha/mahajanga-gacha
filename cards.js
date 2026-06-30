@@ -86,7 +86,7 @@ const MAHAJANGA_CARDS = [
     rarity: "SR",
     image: "投票用紙より書きやすい(SR-001).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
   {
     id: "SR-002",
@@ -94,7 +94,7 @@ const MAHAJANGA_CARDS = [
     rarity: "SR",
     image: "般若心経 on 種皮(SR-002).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
 
   // ---------------- R ----------------
@@ -104,7 +104,7 @@ const MAHAJANGA_CARDS = [
     rarity: "R",
     image: "プラメナ(R-001).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
   {
     id: "R-002",
@@ -112,7 +112,7 @@ const MAHAJANGA_CARDS = [
     rarity: "R",
     image: "ベアダラ(R-002).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
   {
     id: "R-003",
@@ -120,7 +120,7 @@ const MAHAJANGA_CARDS = [
     rarity: "R",
     image: "タボリヌンビ(R-003).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
   {
     id: "R-004",
@@ -128,15 +128,15 @@ const MAHAJANGA_CARDS = [
     rarity: "R",
     image: "ファク(R-004).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
   {
     id: "R-005",
     name: "ダイナクー",
     rarity: "R",
-    image: "ダイナクー(R-005).png",
+    image: "タイナクー(R-005).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
   {
     id: "R-006",
@@ -144,7 +144,7 @@ const MAHAJANGA_CARDS = [
     rarity: "R",
     image: "ココナッツの新芽(R-006).png",
     weight: 1,
-    description: "旧マジャンガ州で出会った一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で出会った一枚。",
   },
 
   // ---------------- N（最も出やすい） ----------------
@@ -154,7 +154,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ブリィ（N-001）.png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-002",
@@ -162,7 +162,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ヴァトケリ(N-002).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-003",
@@ -170,7 +170,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "カイガラムシの被害(N-003).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-004",
@@ -178,7 +178,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "雑なマンゴー(N-004).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-005",
@@ -186,7 +186,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "雑なマンゴー　その2(N-005).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-006",
@@ -194,7 +194,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "とんでもない繊維のマンゴー(N-006).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-007",
@@ -202,7 +202,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "あ！マンゴーだ！(N-007).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-008",
@@ -210,7 +210,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "バナナじゃないよ！(N-008).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-009",
@@ -218,7 +218,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ナメクジ？(N-009).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-010",
@@ -226,7 +226,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "盗っ人キツネザル(N-010).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-011",
@@ -234,7 +234,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "やってきたアフリカマイマイ(N-011).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-012",
@@ -242,7 +242,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "血に群がるアリたち(N-012).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-013",
@@ -250,7 +250,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "「キノコ」(N-013).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-014",
@@ -258,7 +258,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "触るな危険(N-014）.png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-015",
@@ -266,15 +266,15 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ブワ・チリンジャナ(N-015).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-016",
     name: "サフ・バカ",
     rarity: "N",
-    image: "サフ・バカ(N-016).png",
+    image: "サフバカ(N-016).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-017",
@@ -282,7 +282,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "バケツの中で暴れるサフバカ(N-017).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-018",
@@ -290,7 +290,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ファニンチャの巣(N-018).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-019",
@@ -298,7 +298,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "野犬の巣(N-019).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-020",
@@ -306,7 +306,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "人力観覧車(N-020).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-021",
@@ -314,7 +314,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "おっさん(n-021).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-022",
@@ -322,7 +322,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "山火事(N-022).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-023",
@@ -330,7 +330,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "大量発生(N-023).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-024",
@@ -338,7 +338,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "実にかわいい(N-024).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-025",
@@ -346,7 +346,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "風呂場(N-025).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-026",
@@ -354,7 +354,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ユーカリに登って枝を切る人①(N-026).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-027",
@@ -362,7 +362,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "ユーカリに登って枝を切る人②(N-027).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
   {
     id: "N-028",
@@ -370,7 +370,7 @@ const MAHAJANGA_CARDS = [
     rarity: "N",
     image: "5匹で250円(N-028).png",
     weight: 1,
-    description: "旧マジャンガ州で集めた一枚。（説明は後から編集できます）",
+    description: "旧マジャンガ州で集めた一枚。",
   },
 ];
 
