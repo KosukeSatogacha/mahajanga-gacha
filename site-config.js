@@ -46,7 +46,7 @@ const SITE_CONFIG = {
   // ---- 画面の文言（ふざけてOK。マダガスカル説明だけは正確に） ----
   text: {
     browserTitle: "🥭旧マジャンガ州マンゴーガチャ🥭",
-    mainTitle: "旧マジャンガ州ガチャ",
+    mainTitle: "旧マジャンガ州カードガチャ",
     subtitle: "マンゴーと南国テンションで全力収集！🥭🌴☀️",
     freeText: "無料だよ！",
     introText:
