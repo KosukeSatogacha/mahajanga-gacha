@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--
     セキュリティ：HTTPSを強制し、http:// のリソースを読み込ませない。
-    リソースは同一オリジン（相対パス）のみ。インラインスクリプトは使用しない。
+    自オリジン中心。インラインスクリプトは使用しない（GA初期化も外部 analytics.js）。
+    Google Analytics(GA4) 用に googletagmanager.com / google-analytics.com のみ許可。
   -->
   <meta
     http-equiv="Content-Security-Policy"
-    content="default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    content="default-src 'self'; img-src 'self' data: blob: https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
   >
   <meta
     name="description"
-    content="旧マジャンガ州のカードを集めよう！"
+    content="マンゴーと南国テンションで楽しむ、旧マジャンガ州のカードガチャ！"
   >
-  <title>旧マジャンガ州カードガチャ</title>
+  <title>🥭旧マジャンガ州マンゴーガチャ🥭</title>
 
   <!-- SNSリンクプレビュー（Open Graph） -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="旧マジャンガ州カードガチャ">
-  <meta property="og:description" content="旧マジャンガ州のカードを集めよう！">
+  <meta property="og:description" content="旧マジャンガ州のカードを集めよう！🥭">
   <meta property="og:url" content="https://KosukeSatogacha.github.io/mahajanga-gacha/">
   <!-- プレビュー画像（代表カード）。差し替えたい場合はURLを変更。 -->
   <meta property="og:image" content="https://KosukeSatogacha.github.io/mahajanga-gacha/assets/cards/%E3%83%87%E3%82%A3%E3%82%A8%E3%82%B4.png">
@@ -28,20 +29,32 @@
   <!-- SNSリンクプレビュー（X / Twitter） -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="旧マジャンガ州カードガチャ">
-  <meta name="twitter:description" content="旧マジャンガ州のカードを集めよう！">
+  <meta name="twitter:description" content="旧マジャンガ州のカードを集めよう！🥭">
   <meta name="twitter:image" content="https://KosukeSatogacha.github.io/mahajanga-gacha/assets/cards/%E3%83%87%E3%82%A3%E3%82%A8%E3%82%B4.png">
   <!-- ?v= はキャッシュ対策のバージョン番号。内容を更新したら数字を増やす。 -->
-  <link rel="stylesheet" href="./style.css?v=20260629-1">
+  <link rel="stylesheet" href="./style.css?v=20260630-2">
+
+  <!-- Google tag (gtag.js) — GA4 計測ID: G-3YSDL55SS9
+       初期化（dataLayer/gtag/config）は CSP のインラインJS禁止方針に合わせて
+       外部ファイル analytics.js で行う。ローダー本体だけここで非同期読み込みする。 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3YSDL55SS9"></script>
+  <script src="./analytics.js?v=20260630-2"></script>
 </head>
 <body>
+  <!-- ============ 背景のマンゴー装飾（全部マンゴー！色・大きさ・角度がいろいろ） ============
+       中身は script.js の renderBackgroundDecor() が画面サイズに合わせてランダム生成します。 -->
+  <div class="bg-decor" aria-hidden="true"></div>
+
   <main class="app-shell">
     <!-- ============ ヘッダー ============ -->
     <header class="hero">
-      <p class="eyebrow">MAHAJANGA</p>
-      <h1>旧マジャンガ州ガチャ</h1>
-      <p class="hero__subtitle">旧マジャンガ州に関する記録をカードで集めよう</p>
-      <p class="hero__description">
-        旧マジャンガ州に関する場所、人、文化、研究の記録をカードとして収集できるガチャです。1日1回カードを引いて、コレクションの完成を目指しましょう。
+      <div class="mango-band" aria-hidden="true">🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭</div>
+      <p class="eyebrow">🥭 MAHAJANGA 🥭</p>
+      <h1 id="hero-title">旧マジャンガ州ガチャ</h1>
+      <p class="hero__subtitle" id="hero-subtitle">マンゴーと南国テンションで全力収集！</p>
+      <p class="hero__free" id="hero-free">無料だよ！</p>
+      <p class="hero__description" id="hero-description">
+        旧マジャンガ州のカードを集める企画です。
       </p>
     </header>
 
@@ -51,38 +64,33 @@
 
       <div class="status-row">
         <div>
-          <p class="status-label">本日のガチャ</p>
+          <p class="status-label">いまの状態</p>
           <p id="draw-status" class="status-value">確認中...</p>
-        </div>
-        <div class="timer" aria-live="polite">
-          <span class="timer__label">次回まで</span>
-          <span id="countdown" class="timer__value">--:--:--</span>
         </div>
       </div>
 
       <div class="stamp" aria-hidden="true">
         <div class="stamp__ring">
-          <span class="stamp__mark">★</span>
+          <span class="stamp__mark">🥭</span>
         </div>
       </div>
 
       <button id="draw-button" class="draw-button" type="button">
-        <span class="draw-button__main">ガチャを引く</span>
-        <span class="draw-button__sub">本日あと1回</span>
+        <span class="draw-button__main">ガチャを引く！🥭</span>
+        <span class="draw-button__sub">いざ、南国の審判！</span>
       </button>
 
-      <p class="notice">抽選状態とコレクションはこのブラウザに保存されます。</p>
+      <p class="notice" id="notice-text">結果とコレクションはこのブラウザに保存されるよ。</p>
     </section>
 
-    <!-- ============ 抽選結果 ============ -->
-    <section id="result-section" class="result-section" aria-labelledby="result-title" hidden>
-      <div class="result-header">
-        <p class="eyebrow">TODAY'S CARD</p>
-        <h2 id="result-title">獲得カード</h2>
-      </div>
+    <!-- ============ 抽選結果（大きく表示） ============ -->
+    <section id="result-section" class="result-section" aria-labelledby="result-heading" hidden>
+      <button type="button" id="result-close" class="result-close" aria-label="結果を閉じる">× とじる</button>
+
+      <p id="result-heading" class="result-heading" aria-live="polite"></p>
 
       <figure class="photo-card photo-card--large" id="result-card" tabindex="-1">
-        <span id="result-new-badge" class="new-badge" hidden>NEW</span>
+        <span id="result-new-badge" class="new-badge new-badge--big" hidden>NEW！</span>
         <div class="photo-card__frame">
           <img id="result-image" class="photo-card__image" src="" alt="" decoding="async">
           <div class="photo-card__placeholder" hidden>
@@ -95,6 +103,7 @@
         </figcaption>
       </figure>
 
+      <p id="result-reaction" class="result-reaction" aria-live="polite"></p>
       <p id="result-message" class="result-message" aria-live="polite"></p>
 
       <div class="result-actions">
@@ -128,19 +137,22 @@
     <section class="collection-section" aria-labelledby="collection-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">COLLECTION ALBUM</p>
-          <h2 id="collection-title">カードコレクション</h2>
+          <p class="eyebrow">COLLECTION</p>
+          <h2 id="collection-title">コレクション収穫祭🧺</h2>
         </div>
         <p id="collection-count" class="collection-count">0 / 0</p>
       </div>
 
+      <!-- マンゴーゲージ -->
       <div class="progress" aria-label="コンプリート率">
         <div class="progress__head">
-          <span>コンプリート率</span>
+          <span>🥭 マンゴー収穫メーター</span>
           <span id="progress-percent">0%</span>
         </div>
         <div class="progress__bar">
-          <div id="progress-fill" class="progress__fill" style="width: 0%"></div>
+          <div id="progress-fill" class="progress__fill" style="width: 0%">
+            <span class="progress__mango" aria-hidden="true">🥭</span>
+          </div>
         </div>
       </div>
 
@@ -172,15 +184,47 @@
 
     <!-- ============ 提供割合 ============ -->
     <section class="probability-section" aria-labelledby="probability-title">
-      <h2 id="probability-title">提供割合</h2>
+      <h2 id="probability-title">提供割合（マンゴー出現率）</h2>
       <div class="probability-list" id="probability-list"></div>
     </section>
+
+    <!-- ============ マダガスカル・旧マジャンガ州の説明 ============ -->
+    <section class="about-section" aria-labelledby="about-title">
+      <h2 id="about-title">まじめコーナー📚（読むと旧マジャンガ州について少し知れる）</h2>
+
+      <details class="about-item" open>
+        <summary>🌍 マダガスカルってどこ？</summary>
+        <p>
+          マダガスカルは、アフリカ大陸の東、インド洋に浮かぶ島国です。独自の生き物、自然、文化で知られています。
+        </p>
+      </details>
+
+      <details class="about-item">
+        <summary>🗺️ 旧マジャンガ州って何？</summary>
+        <p>
+          旧マジャンガ州は、かつて使われていたマダガスカルの行政区分の一つです。マダガスカル西部から北西部に位置し、現在はいくつかの地域へ再編されています。
+        </p>
+      </details>
+
+      <details class="about-item">
+        <summary>🥭 このガチャは何？</summary>
+        <p>
+          旧マジャンガ州に関係する場所、人、文化、研究などを、カードとして集める企画です。なぜマンゴーが大量に出てくるのかについては、深く考えないでください。
+        </p>
+      </details>
+    </section>
+
+    <footer class="site-footer" id="site-footer">🥭 旧マジャンガ州ガチャ 🥭</footer>
+    <p class="privacy-note">
+      このサイトでは、利用状況の把握と改善のためGoogle Analyticsを使用しています。
+    </p>
   </main>
 
   <!-- ============ 抽選演出 ============ -->
   <dialog id="reveal-dialog" class="reveal-dialog" aria-labelledby="reveal-title">
     <div class="reveal-dialog__content">
-      <p id="reveal-title" class="reveal-dialog__text">カードを抽選しています...</p>
+      <div class="reveal-mango" aria-hidden="true">🥭</div>
+      <p id="reveal-title" class="reveal-dialog__text">マンゴーを全力でシャッフル中…！</p>
       <div class="reveal-loader" aria-hidden="true">
         <span></span><span></span><span></span>
       </div>
@@ -209,8 +253,8 @@
   </dialog>
 
   <!-- ?v= はキャッシュ対策。cards.js は script.js より先に読み込む。 -->
-  <script src="./site-config.js?v=20260629-1"></script>
-  <script src="./cards.js?v=20260629-1"></script>
-  <script src="./script.js?v=20260629-1"></script>
+  <script src="./site-config.js?v=20260630-2"></script>
+  <script src="./cards.js?v=20260630-2"></script>
+  <script src="./script.js?v=20260630-2"></script>
 </body>
 </html>

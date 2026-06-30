@@ -1,47 +1,48 @@
 /* =====================================================================
- * 旧マジャンガ州 カードアルバム — スタイル
- * テーマ：砂・テラコッタ・海の青緑による落ち着いた「旅の記録／図鑑」配色
+ * 旧マジャンガ州マンゴーガチャ — スタイル
+ * テーマ：明るい南国の昼・太陽・海・マンゴーだらけの陽気な祝祭デザイン🥭
  * ===================================================================== */
 
-/* ---------- カラーパレット ---------- */
+/* ---------- カラーパレット（南国・お祭り） ---------- */
 :root {
-  --bg: #f4ece0;          /* 砂・パーチメント */
-  --bg-deep: #ede0cf;
-  --panel: #fffaf2;        /* アルバムのページ */
-  --panel-border: #e2d3bd;
-  --ink: #3a2f28;          /* 文字（こげ茶） */
-  --ink-soft: #7c6b5b;     /* 補助テキスト */
-  --terracotta: #c9663b;   /* アクセント（赤土） */
-  --teal: #2f7d7a;         /* アクセント（海） */
-  --teal-deep: #1f5d5a;
-  --shadow: 0 18px 44px rgba(74, 53, 33, 0.16);
-  --shadow-soft: 0 8px 20px rgba(74, 53, 33, 0.1);
+  --mango: #ffb12e;
+  --mango-deep: #ff8c1a;
+  --orange: #ff7a3d;
+  --coral: #ff6f91;
+  --pink: #ff8fb0;
+  --turq: #1fc8c0;
+  --emerald: #16c47f;
+  --sky: #5cc6ff;
+
+  --cream: #fff7e6;
+  --panel: #fffdf6;        /* パネル：ほぼ白＋クリーム */
+  --panel-2: #fff2cc;      /* 明るい黄色のアクセント面 */
+  --panel-border: #ffd884;
+  --ink: #4a2c0c;          /* 文字：濃いブラウン（明るい背景で読みやすい） */
+  --ink-soft: #8a6334;     /* 補助テキスト */
+  --shadow: 0 16px 40px rgba(255, 140, 26, 0.25);
+  --shadow-soft: 0 8px 20px rgba(255, 140, 26, 0.18);
 
   /* レアリティ色 */
-  --c-ssr: #d4a017;        /* 金 */
-  --c-sr: #8b5cf6;         /* 紫 */
-  --c-r: #3b82f6;          /* 青 */
-  --c-n: #9b8c7a;          /* 灰（やや茶） */
+  --c-ssr: #ff9d00;        /* 金（枠は虹グラデ） */
+  --c-sr: #9b5cff;         /* 紫 */
+  --c-r: #2f9bff;          /* 青 */
+  --c-n: #79b6a6;          /* 明るめの緑がかった灰 */
 }
 
 * {
   box-sizing: border-box;
 }
 
-/*
-  閉じている <dialog> は必ず非表示にする。
-  一部ブラウザではブラウザ標準スタイルが効かず、ダイアログの中身
-  （例：「カードを抽選しています…」）がページ内に表示されてしまうのを防ぐ。
-*/
+/* 閉じている <dialog> は必ず非表示にする（中身がページに漏れるのを防ぐ） */
 dialog:not([open]) {
   display: none;
 }
 
 /*
   hidden 属性は必ず非表示にする。
-  .photo-card__placeholder などに display: grid 等を指定していると、
-  作者スタイルがブラウザ標準の [hidden]{display:none} を上書きしてしまい、
-  hidden 属性を付けても要素（エラー文など）が消えない。これを防ぐ。
+  作者スタイル（display: grid 等）がブラウザ標準の [hidden]{display:none} を
+  上書きしてエラー文などが消えなくなるのを防ぐ。※削除しないこと。
 */
 [hidden] {
   display: none !important;
@@ -59,10 +60,12 @@ body {
     "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif;
   line-height: 1.7;
   color: var(--ink);
+  /* 明るい南国の空〜海＋太陽＆マンゴーの光 */
   background:
-    radial-gradient(circle at 12% -8%, rgba(77, 179, 174, 0.18), transparent 38%),
-    radial-gradient(circle at 92% 4%, rgba(201, 102, 59, 0.20), transparent 36%),
-    linear-gradient(180deg, #2a2018 0%, #1b1410 100%);
+    radial-gradient(circle at 14% -2%, rgba(255, 221, 102, 0.95), transparent 45%),
+    radial-gradient(circle at 86% 4%, rgba(255, 122, 61, 0.85), transparent 46%),
+    radial-gradient(circle at 50% 108%, rgba(31, 200, 192, 0.9), transparent 55%),
+    linear-gradient(180deg, #ffe27a 0%, #ffb86b 36%, #ff9f8f 60%, #7fe3df 100%);
   background-attachment: fixed;
 }
 
@@ -94,30 +97,63 @@ img {
   border: 0;
 }
 
+/* ---------- 背景のマンゴー装飾 ---------- */
+.bg-decor {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/*
+  1個分の基本スタイル。位置・大きさ・回転・透明度・色味・アニメ時間は
+  script.js の renderBackgroundDecor() がインラインでランダムに付与する。
+  （以前は nth-child で固定配置していたが、画面サイズに応じた個数と
+   毎回ばらけた配置にするためJS生成へ移行した）
+*/
+.bg-decor span {
+  position: absolute;
+  font-size: 2.6rem;
+  opacity: 0.5;
+  animation: decor-bob 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(180, 90, 0, 0.25));
+}
+
 .app-shell {
-  width: min(100% - 32px, 1000px);
+  position: relative;
+  width: min(100% - 28px, 1000px);
   margin: 0 auto;
-  padding: 56px 0 96px;
+  padding: 44px 0 80px;
 }
 
 /* ---------- ヘッダー ---------- */
 .hero {
-  margin-bottom: 30px;
+  margin-bottom: 26px;
   text-align: center;
 }
 
-.eyebrow {
-  margin: 0 0 10px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.24em;
-  color: var(--teal);
+.mango-band {
+  overflow: hidden;
+  margin: 0 auto 14px;
+  max-width: 100%;
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+  opacity: 0.9;
 }
 
-/* 暗い背景の上に直接乗る見出しは明るい色にする */
-.hero .eyebrow,
-.result-section .eyebrow {
-  color: #5bbdb6;
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: #7a3b00;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-soft);
 }
 
 h1,
@@ -129,38 +165,62 @@ p {
 
 h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 8vw, 4rem);
-  line-height: 1.05;
-  letter-spacing: 0.06em;
-  color: #f6efe2;
+  font-size: clamp(2.6rem, 9vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: 0.04em;
+  color: #b5340a;
+  text-shadow:
+    2px 2px 0 #fff,
+    4px 5px 0 rgba(255, 140, 26, 0.55);
 }
 
 h2 {
   margin: 0;
-  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-size: clamp(1.45rem, 4vw, 2rem);
   letter-spacing: 0.02em;
+  color: #b5340a;
 }
 
 .hero__subtitle {
-  margin: 14px 0 0;
-  font-size: clamp(1rem, 3vw, 1.2rem);
-  font-weight: 700;
-  color: var(--terracotta);
+  margin: 16px 0 0;
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  font-weight: 900;
+  color: #ff5a1f;
+  text-shadow: 1px 1px 0 #fff;
+}
+
+.hero__free {
+  display: inline-block;
+  margin: 12px auto 0;
+  padding: 6px 20px;
+  border-radius: 999px;
+  font-size: clamp(1.1rem, 3.4vw, 1.5rem);
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, var(--emerald), var(--turq));
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-3deg);
+  animation: draw-throb 1.6s ease-in-out infinite;
 }
 
 .hero__description {
-  max-width: 620px;
-  margin: 8px auto 0;
-  color: #d8cbb6;
-  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 10px auto 0;
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--ink);
+  font-size: 0.96rem;
 }
 
 /* ---------- パネル共通 ---------- */
 .gacha-panel,
 .collection-section,
-.probability-section {
-  border: 1px solid var(--panel-border);
-  border-radius: 22px;
+.probability-section,
+.about-section {
+  position: relative;
+  border: 3px solid #fff;
+  border-radius: 26px;
   background: var(--panel);
   box-shadow: var(--shadow);
 }
@@ -169,12 +229,10 @@ h2 {
  * ガチャ
  * ===================================================================== */
 .gacha-panel {
-  position: relative;
-  padding: clamp(24px, 5vw, 44px);
+  padding: clamp(22px, 5vw, 42px);
   text-align: center;
-  /* チケットのような切れ込みで「旅のスタンプ台紙」感を出す */
   background:
-    radial-gradient(circle at 50% 0%, rgba(47, 125, 122, 0.06), transparent 60%),
+    radial-gradient(circle at 50% -10%, rgba(255, 177, 46, 0.28), transparent 60%),
     var(--panel);
 }
 
@@ -186,98 +244,83 @@ h2 {
   text-align: left;
 }
 
-.status-label,
-.timer__label {
+.status-label {
   display: block;
   margin: 0 0 2px;
   font-size: 0.76rem;
+  font-weight: 700;
   color: var(--ink-soft);
 }
 
 .status-value {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 900;
 }
 
 .status-value--available {
-  color: var(--teal-deep);
+  color: var(--emerald);
 }
 
-.status-value--used {
-  color: var(--ink-soft);
-}
-
-.timer {
-  text-align: right;
-}
-
-.timer__value {
-  display: block;
-  font-variant-numeric: tabular-nums;
-  font-weight: 800;
-  color: var(--ink);
-}
-
-/* スタンプ風の演出マーク */
+/* マンゴーのスタンプ風マーク */
 .stamp {
   display: grid;
   place-items: center;
-  margin: 34px auto 30px;
+  margin: 26px auto 24px;
 }
 
 .stamp__ring {
   display: grid;
   width: 150px;
   height: 150px;
-  border: 4px dashed var(--terracotta);
+  border: 6px dashed var(--mango-deep);
   border-radius: 50%;
   place-items: center;
-  background:
-    radial-gradient(circle at 35% 30%, #fff, rgba(201, 102, 59, 0.12) 70%);
+  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 177, 46, 0.3) 72%);
   box-shadow: var(--shadow-soft);
-  animation: stamp-pulse 2.6s ease-in-out infinite;
+  animation: stamp-pulse 2.4s ease-in-out infinite;
 }
 
 .stamp__mark {
-  font-size: 3.6rem;
-  color: var(--terracotta);
+  font-size: 4rem;
+  animation: stamp-spin 9s linear infinite;
 }
 
 .draw-button {
-  width: min(100%, 420px);
-  padding: 17px 28px;
+  width: min(100%, 460px);
+  padding: 20px 28px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 999px;
   color: #fff;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--terracotta), #b5512c);
-  box-shadow: 0 12px 26px rgba(201, 102, 59, 0.34);
+  background: linear-gradient(135deg, var(--orange), var(--mango-deep) 50%, var(--coral));
+  box-shadow: 0 14px 30px rgba(255, 122, 61, 0.5);
   transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    opacity 160ms ease;
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    filter 140ms ease;
+  animation: draw-throb 1.8s ease-in-out infinite;
 }
 
 .draw-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 34px rgba(201, 102, 59, 0.42);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 22px 42px rgba(255, 122, 61, 0.6);
 }
 
 .draw-button:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.99);
 }
 
 .draw-button:focus-visible {
-  outline: 3px solid var(--teal);
+  outline: 4px solid var(--turq);
   outline-offset: 4px;
 }
 
 .draw-button:disabled {
   cursor: not-allowed;
-  background: #c9bda9;
-  opacity: 0.85;
+  background: #d9c3a4;
   box-shadow: none;
+  animation: none;
 }
 
 .draw-button__main,
@@ -286,71 +329,66 @@ h2 {
 }
 
 .draw-button__main {
-  font-size: 1.08rem;
-  font-weight: 800;
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
 }
 
 .draw-button__sub {
-  margin-top: 2px;
-  font-size: 0.75rem;
-  opacity: 0.9;
+  margin-top: 3px;
+  font-size: 0.8rem;
+  opacity: 0.95;
 }
 
 .notice {
   margin: 16px 0 0;
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   color: var(--ink-soft);
 }
 
 /* =====================================================================
- * 写真カード（共通）— 5:7 の縦長を維持し、画像全体を表示する
+ * 写真カード（共通）— 5:7 の縦長を維持
  * ===================================================================== */
 .photo-card {
   --rarity-color: var(--c-n);
   position: relative;
   margin: 0;
-  border: 3px solid var(--rarity-color);
-  border-radius: 18px;
+  border: 4px solid var(--rarity-color);
+  border-radius: 20px;
   background: #fff;
   box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
 
-/* レアリティごとの枠色 */
-.rarity--ssr {
-  --rarity-color: var(--c-ssr);
-}
-.rarity--sr {
-  --rarity-color: var(--c-sr);
-}
-.rarity--r {
-  --rarity-color: var(--c-r);
-}
-.rarity--n {
-  --rarity-color: var(--c-n);
-}
+.rarity--ssr { --rarity-color: var(--c-ssr); }
+.rarity--sr { --rarity-color: var(--c-sr); }
+.rarity--r { --rarity-color: var(--c-r); }
+.rarity--n { --rarity-color: var(--c-n); }
 
-/* SSRは金〜虹色のグラデ枠 */
+/* SSRは虹色のグラデ枠 */
 .photo-card.rarity--ssr {
   border-color: transparent;
   background:
     linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(135deg, #f6c945, #ff8fb0, #8b5cf6, #45c7c2, #f6c945) border-box;
-  box-shadow: 0 10px 26px rgba(212, 160, 23, 0.35);
+    linear-gradient(135deg, #ffd000, #ff8fb0, #9b5cff, #1fc8c0, #16c47f, #ffd000) border-box;
+  box-shadow: 0 12px 30px rgba(255, 157, 0, 0.4);
 }
 
+/*
+  カード画像の枠。固定比率は設けず、画像本来の縦横比に合わせて高さが決まる。
+  （画像は様々なサイズのPNG。リサイズ・トリミングはせず、そのまま全体を表示する）
+*/
 .photo-card__frame {
-  /* 5:7（1000:1400）の比率を保持。画像全体が見えるよう contain。 */
-  aspect-ratio: 1000 / 1400;
   display: grid;
   place-items: center;
-  background: #efe7d9;
+  background: #fff4dc;
 }
 
 .photo-card__image {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;          /* PNG本来の縦横比を維持（変形させない） */
+  object-fit: contain;   /* 余白が出る場合も画像を切らない。cover は使わない */
 }
 
 /* 画像読み込み失敗時のプレースホルダー */
@@ -358,17 +396,17 @@ h2 {
   display: grid;
   place-items: center;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;   /* 枠が高さ0で潰れないよう、おおよそのカード比率を確保 */
   padding: 12px;
   text-align: center;
   font-size: 0.78rem;
   color: var(--ink-soft);
   background: repeating-linear-gradient(
     45deg,
-    #eadfce,
-    #eadfce 10px,
-    #e3d6c1 10px,
-    #e3d6c1 20px
+    #ffe9b8,
+    #ffe9b8 10px,
+    #ffdf9c 10px,
+    #ffdf9c 20px
   );
 }
 
@@ -377,22 +415,22 @@ h2 {
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
-  background: var(--panel);
-  border-top: 1px solid var(--panel-border);
+  background: var(--panel-2);
+  border-top: 2px solid #fff;
 }
 
 .photo-card__name {
-  font-weight: 800;
+  font-weight: 900;
   font-size: 0.95rem;
 }
 
 /* ---------- レアリティタグ ---------- */
 .rarity-tag {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 3px 12px;
   border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: 0.74rem;
+  font-weight: 900;
   letter-spacing: 0.04em;
   color: #fff;
   background: var(--rarity-color, var(--c-n));
@@ -400,73 +438,117 @@ h2 {
 }
 
 .rarity-tag.rarity--ssr {
-  color: #5a3d00;
-  background: linear-gradient(135deg, #f6c945, #ffe08a);
+  color: #6b3b00;
+  background: linear-gradient(135deg, #ffd000, #ff8fb0, #9b5cff, #1fc8c0);
 }
-.rarity-tag.rarity--sr {
-  background: var(--c-sr);
-}
-.rarity-tag.rarity--r {
-  background: var(--c-r);
-}
-.rarity-tag.rarity--n {
-  background: var(--c-n);
-}
+.rarity-tag.rarity--sr { background: var(--c-sr); }
+.rarity-tag.rarity--r { background: var(--c-r); }
+.rarity-tag.rarity--n { background: var(--c-n); }
 .rarity-tag--hidden {
   color: var(--ink-soft);
-  background: #d8cab4;
+  background: #ffe3a8;
 }
 
 /* ---------- NEWバッジ ---------- */
 .new-badge {
   position: absolute;
   z-index: 3;
-  top: 8px;
-  left: 8px;
-  padding: 3px 9px;
-  border-radius: 6px;
-  font-size: 0.68rem;
+  top: 10px;
+  left: 10px;
+  padding: 4px 11px;
+  border-radius: 8px;
+  font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.06em;
   color: #fff;
-  background: var(--terracotta);
-  box-shadow: 0 4px 10px rgba(201, 102, 59, 0.4);
+  background: linear-gradient(135deg, var(--coral), var(--orange));
+  box-shadow: 0 4px 10px rgba(255, 111, 145, 0.5);
+  transform: rotate(-8deg);
+}
+
+.new-badge--big {
+  top: 14px;
+  left: 14px;
+  padding: 8px 16px;
+  font-size: 1.05rem;
+  border-radius: 12px;
+  animation: badge-pop 600ms cubic-bezier(0.2, 1.5, 0.3, 1) both, badge-wiggle 1.4s ease-in-out 0.6s infinite;
 }
 
 /* =====================================================================
- * 抽選結果
+ * 抽選結果（大きく・派手に）
  * ===================================================================== */
 .result-section {
-  padding: 56px 0 8px;
+  position: relative;
+  margin-top: 30px;
+  padding: 26px clamp(16px, 4vw, 30px) 22px;
+  border: 4px solid #fff;
+  border-radius: 28px;
   text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 221, 102, 0.9), rgba(255, 246, 230, 0.96) 60%);
+  box-shadow: var(--shadow);
 }
 
-.result-header {
-  margin-bottom: 22px;
+.result-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: #fff;
+  background: var(--coral);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
 }
 
-.result-header h2 {
-  color: #f6efe2;
+.result-close:hover { background: #ff5478; }
+.result-close:focus-visible { outline: 3px solid var(--turq); outline-offset: 3px; }
+
+.result-heading {
+  margin: 6px 0 14px;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 900;
+  color: #ff5a1f;
+  text-shadow: 2px 2px 0 #fff;
+  animation: heading-pop 500ms cubic-bezier(0.2, 1.6, 0.3, 1) both;
 }
 
+/*
+  抽選結果のカード。
+  幅基準で表示する：デスクトップは最大560px、スマホは画面幅の90%以内。
+  高さは画像の縦横比に従って自動で決まり、縦に長い場合はページをスクロールできる。
+*/
 .photo-card--large {
-  width: min(100%, 320px);
+  width: min(90vw, 560px);
   margin: 0 auto;
-  animation: card-enter 700ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+  animation: card-pop 650ms cubic-bezier(0.18, 1.5, 0.25, 1) both;
 }
 
 .photo-card--large .photo-card__caption {
   justify-content: center;
+  font-size: 1.05rem;
 }
 
 .photo-card--large .photo-card__name {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+}
+
+.result-reaction {
+  margin: 16px auto 0;
+  max-width: 560px;
+  font-size: clamp(1.05rem, 3.4vw, 1.5rem);
+  font-weight: 900;
+  color: var(--mango-deep);
 }
 
 .result-message {
-  margin: 18px 0 0;
-  font-weight: 700;
-  color: #d8cbb6;
+  margin: 8px 0 0;
+  font-weight: 800;
+  color: var(--ink-soft);
 }
 
 .result-actions {
@@ -474,120 +556,87 @@ h2 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  margin-top: 22px;
+  margin-top: 20px;
 }
 
-/* X投稿ボタン：黒基調でガチャボタン（赤土色）と明確に区別する */
+/* X投稿ボタン：黒基調でガチャボタンと明確に区別 */
 .share-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 48px;
-  padding: 12px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  min-height: 50px;
+  padding: 12px 26px;
+  border: 0;
   border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 900;
   color: #fff;
   background: #0b0b0b;
   cursor: pointer;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    background 160ms ease;
+  box-shadow: var(--shadow-soft);
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
-.share-button:hover {
-  transform: translateY(-2px);
-  background: #000;
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
-}
+.share-button:hover { transform: translateY(-2px); background: #000; box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45); }
+.share-button:active { transform: translateY(1px); }
+.share-button:focus-visible { outline: 4px solid var(--turq); outline-offset: 3px; }
 
-.share-button:active {
-  transform: translateY(1px);
-}
-
-.share-button:focus-visible {
-  outline: 3px solid #5bbdb6;
-  outline-offset: 3px;
-}
-
-/* テキストの「X」ロゴ（非公式ロゴ画像は使わない） */
 .share-button__logo {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 900;
   line-height: 1;
 }
 
-/* カード画像保存ボタン：枠線主体の控えめなデザイン */
+/* カード画像保存ボタン */
 .save-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 12px 24px;
-  border: 1.5px solid rgba(246, 239, 226, 0.5);
+  min-height: 50px;
+  padding: 12px 26px;
+  border: 3px solid var(--mango-deep);
   border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: #f6efe2;
-  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--mango-deep);
+  background: #fff;
   cursor: pointer;
-  transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    background 160ms ease;
+  transition: transform 140ms ease, background 140ms ease, color 140ms ease;
 }
 
-.save-button:hover {
-  transform: translateY(-2px);
-  border-color: var(--terracotta);
-  background: rgba(201, 102, 59, 0.16);
-}
-
-.save-button:active {
-  transform: translateY(1px);
-}
-
-.save-button:focus-visible {
-  outline: 3px solid #5bbdb6;
-  outline-offset: 3px;
-}
+.save-button:hover { transform: translateY(-2px); background: var(--mango); color: #fff; }
+.save-button:active { transform: translateY(1px); }
+.save-button:focus-visible { outline: 4px solid var(--turq); outline-offset: 3px; }
 
 .share-note {
-  margin: 12px auto 0;
-  max-width: 420px;
-  font-size: 0.76rem;
-  color: #c4b8a4;
+  margin: 14px auto 0;
+  max-width: 460px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
 }
 
 .save-error {
   margin: 10px auto 0;
-  max-width: 420px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #ff9b86;
+  max-width: 460px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #d12c2c;
 }
 
-/* スマホでは押しやすいよう横幅を広げて縦並びにする */
+/* スマホでは押しやすいよう縦並び・全幅 */
 @media (max-width: 480px) {
-  .result-actions {
-    flex-direction: column;
-  }
-
+  .result-actions { flex-direction: column; }
   .share-button,
-  .save-button {
-    width: 100%;
-  }
+  .save-button { width: 100%; }
 }
 
 /* =====================================================================
- * コレクション（アルバム／図鑑）
+ * コレクション
  * ===================================================================== */
 .collection-section {
-  margin-top: 48px;
+  margin-top: 36px;
   padding: clamp(22px, 5vw, 40px);
 }
 
@@ -601,46 +650,58 @@ h2 {
 
 .collection-count {
   margin: 0;
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--terracotta);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--mango-deep);
   font-variant-numeric: tabular-nums;
 }
 
-/* コンプリート率バー */
+/* マンゴーゲージ */
 .progress {
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
 
 .progress__head {
   display: flex;
   justify-content: space-between;
   margin-bottom: 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 900;
   color: var(--ink-soft);
 }
 
 .progress__bar {
-  height: 12px;
+  position: relative;
+  height: 22px;
   border-radius: 999px;
-  background: #e6d8c2;
+  background: #ffe9b8;
+  border: 2px solid #fff;
+  box-shadow: inset 0 2px 6px rgba(180, 90, 0, 0.15);
   overflow: hidden;
 }
 
 .progress__fill {
+  position: relative;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--teal), var(--terracotta));
-  transition: width 500ms ease;
+  background: linear-gradient(90deg, var(--emerald), var(--mango), var(--orange));
+  transition: width 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.progress__mango {
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
 }
 
 /* 絞り込み */
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px 28px;
-  margin-bottom: 26px;
+  gap: 16px 28px;
+  margin-bottom: 24px;
 }
 
 .filter-group {
@@ -651,8 +712,8 @@ h2 {
 }
 
 .filter-group__label {
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.8rem;
+  font-weight: 900;
   color: var(--ink-soft);
 }
 
@@ -663,75 +724,53 @@ h2 {
 }
 
 .filter-button {
-  padding: 6px 14px;
-  border: 1.5px solid var(--panel-border);
+  padding: 7px 15px;
+  border: 2px solid var(--panel-border);
   border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.82rem;
+  font-weight: 800;
   color: var(--ink-soft);
   background: #fff;
   cursor: pointer;
-  transition:
-    background 140ms ease,
-    color 140ms ease,
-    border-color 140ms ease;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
 
-.filter-button:hover {
-  border-color: var(--teal);
-}
-
-.filter-button:focus-visible {
-  outline: 3px solid var(--teal);
-  outline-offset: 2px;
-}
+.filter-button:hover { border-color: var(--orange); transform: translateY(-1px); }
+.filter-button:focus-visible { outline: 3px solid var(--turq); outline-offset: 2px; }
 
 .filter-button.is-active {
   color: #fff;
-  background: var(--teal);
-  border-color: var(--teal);
+  background: var(--orange);
+  border-color: var(--orange);
 }
 
-/* レアリティ絞り込みボタンが選択中のときは各レアリティ色に */
-.filter-button--ssr.is-active {
-  color: #5a3d00;
-  background: var(--c-ssr);
-  border-color: var(--c-ssr);
-}
-.filter-button--sr.is-active {
-  background: var(--c-sr);
-  border-color: var(--c-sr);
-}
-.filter-button--r.is-active {
-  background: var(--c-r);
-  border-color: var(--c-r);
-}
-.filter-button--n.is-active {
-  background: var(--c-n);
-  border-color: var(--c-n);
-}
+.filter-button--ssr.is-active { color: #6b3b00; background: var(--c-ssr); border-color: var(--c-ssr); }
+.filter-button--sr.is-active { background: var(--c-sr); border-color: var(--c-sr); }
+.filter-button--r.is-active { background: var(--c-r); border-color: var(--c-r); }
+.filter-button--n.is-active { background: var(--c-n); border-color: var(--c-n); }
 
 /* グリッド */
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .collection-empty {
   margin: 24px 0 0;
   text-align: center;
+  font-weight: 700;
   color: var(--ink-soft);
 }
 
-/* コレクションの1枚 */
+/* コレクションの1枚（大きめに見せる） */
 .collection-card {
   position: relative;
   display: block;
   width: 100%;
   padding: 0;
-  border: 3px solid var(--rarity-color, var(--c-n));
-  border-radius: 16px;
+  border: 4px solid var(--rarity-color, var(--c-n));
+  border-radius: 18px;
   background: #fff;
   box-shadow: var(--shadow-soft);
   overflow: hidden;
@@ -742,34 +781,35 @@ h2 {
 
 .collection-card.is-owned {
   cursor: pointer;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
 .collection-card.is-owned:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) rotate(-0.6deg);
   box-shadow: var(--shadow);
 }
 
 .collection-card.is-owned:focus-visible {
-  outline: 3px solid var(--teal);
+  outline: 4px solid var(--turq);
   outline-offset: 2px;
 }
 
-/* SSR枠（コレクションでも金〜虹） */
 .collection-card.rarity--ssr {
   border-color: transparent;
   background:
     linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(135deg, #f6c945, #ff8fb0, #8b5cf6, #45c7c2, #f6c945) border-box;
+    linear-gradient(135deg, #ffd000, #ff8fb0, #9b5cff, #1fc8c0, #16c47f, #ffd000) border-box;
 }
 
+/*
+  コレクション一覧は枠の高さを揃えたいので比率を固定する（実画像に近い 3:4）。
+  画像は object-fit: contain で全体表示。cover は使わず、切れ・変形は起きない。
+*/
 .collection-card .photo-card__frame {
-  aspect-ratio: 1000 / 1400;
+  aspect-ratio: 3 / 4;
   display: grid;
   place-items: center;
-  background: #efe7d9;
+  background: #fff4dc;
 }
 
 .collection-card .photo-card__image {
@@ -782,14 +822,14 @@ h2 {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 10px;
-  background: var(--panel);
-  border-top: 1px solid var(--panel-border);
+  padding: 9px 11px;
+  background: var(--panel-2);
+  border-top: 2px solid #fff;
 }
 
 .collection-card__name {
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.86rem;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -799,55 +839,57 @@ h2 {
   color: var(--ink-soft);
 }
 
-/* 所持枚数バッジ */
+/* 所持枚数バッジ（目立たせる） */
 .collection-card__count {
   position: absolute;
   z-index: 3;
-  top: 8px;
-  right: 8px;
-  padding: 2px 8px;
+  top: 9px;
+  right: 9px;
+  padding: 3px 10px;
   border-radius: 999px;
-  font-size: 0.74rem;
+  font-size: 0.82rem;
   font-weight: 900;
   color: #fff;
-  background: rgba(58, 47, 40, 0.82);
+  background: linear-gradient(135deg, var(--orange), var(--mango-deep));
+  box-shadow: 0 4px 10px rgba(255, 122, 61, 0.5);
 }
 
-/* 未獲得カードの裏面（暗いシルエット） */
+/* 未獲得カードの裏面（明るい南国デザイン） */
 .collection-card.is-locked {
-  border-color: #c9bba4;
-  filter: none;
+  border-color: #ffd884;
 }
 
 .photo-card__frame--back {
   position: relative;
   background:
-    repeating-linear-gradient(
-      45deg,
-      #7c6b5b,
-      #7c6b5b 14px,
-      #6f5f50 14px,
-      #6f5f50 28px
-    );
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.5), transparent 60%),
+    repeating-linear-gradient(45deg, #ffd27a, #ffd27a 16px, #ffc14d 16px, #ffc14d 32px);
+}
+
+.photo-card__frame--back::after {
+  content: "🥭";
+  position: absolute;
+  font-size: 2.4rem;
+  opacity: 0.5;
 }
 
 .card-back__mark {
-  font-size: 2.6rem;
+  font-size: 3rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(122, 59, 0, 0.5);
 }
 
 /* =====================================================================
  * 提供割合
  * ===================================================================== */
 .probability-section {
-  margin-top: 22px;
+  margin-top: 24px;
   padding: 24px clamp(22px, 5vw, 32px);
 }
 
 .probability-section h2 {
   margin-bottom: 16px;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
 }
 
 .probability-list {
@@ -861,7 +903,7 @@ h2 {
   align-items: center;
   gap: 8px;
   color: var(--ink-soft);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .probability-list strong {
@@ -870,23 +912,84 @@ h2 {
 }
 
 .rarity-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--c-n);
 }
 
-.rarity-dot.rarity--ssr {
-  background: var(--c-ssr);
+.rarity-dot.rarity--ssr { background: var(--c-ssr); }
+.rarity-dot.rarity--sr { background: var(--c-sr); }
+.rarity-dot.rarity--r { background: var(--c-r); }
+.rarity-dot.rarity--n { background: var(--c-n); }
+
+/* =====================================================================
+ * まじめコーナー（マダガスカル説明）
+ * ===================================================================== */
+.about-section {
+  margin-top: 24px;
+  padding: 24px clamp(22px, 5vw, 32px);
 }
-.rarity-dot.rarity--sr {
-  background: var(--c-sr);
+
+.about-section h2 {
+  margin-bottom: 14px;
+  font-size: 1.2rem;
 }
-.rarity-dot.rarity--r {
-  background: var(--c-r);
+
+.about-item {
+  margin-bottom: 10px;
+  border: 2px solid var(--panel-border);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
 }
-.rarity-dot.rarity--n {
-  background: var(--c-n);
+
+.about-item > summary {
+  padding: 12px 16px;
+  font-weight: 900;
+  color: #b5340a;
+  cursor: pointer;
+  list-style: none;
+  background: var(--panel-2);
+}
+
+.about-item > summary::-webkit-details-marker { display: none; }
+
+.about-item > summary::after {
+  content: "＋";
+  float: right;
+  font-weight: 900;
+  color: var(--mango-deep);
+}
+
+.about-item[open] > summary::after { content: "−"; }
+
+.about-item > p {
+  margin: 0;
+  padding: 14px 16px;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* ---------- フッター ---------- */
+.site-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-weight: 800;
+  color: #7a3b00;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* プライバシー表記：目立ちすぎない控えめな一行 */
+.privacy-note {
+  margin: 10px auto 0;
+  max-width: 640px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  opacity: 0.85;
 }
 
 /* =====================================================================
@@ -899,8 +1002,9 @@ h2 {
   max-height: none;
   padding: 0;
   border: 0;
-  color: #fff;
-  background: rgba(58, 47, 40, 0.92);
+  color: #7a3b00;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 246, 220, 0.96), rgba(255, 200, 120, 0.92));
 }
 
 .reveal-dialog[open] {
@@ -909,7 +1013,7 @@ h2 {
 }
 
 .reveal-dialog::backdrop {
-  background: rgba(58, 47, 40, 0.86);
+  background: rgba(255, 170, 80, 0.55);
 }
 
 .reveal-dialog__content {
@@ -917,56 +1021,94 @@ h2 {
   text-align: center;
 }
 
+.reveal-mango {
+  font-size: 5rem;
+  animation: reveal-shake 0.5s ease-in-out infinite;
+}
+
 .reveal-dialog__text {
-  margin: 0 0 24px;
-  font-size: clamp(1.2rem, 4vw, 1.6rem);
-  font-weight: 800;
+  margin: 16px 0 24px;
+  font-size: clamp(1.3rem, 4.4vw, 1.9rem);
+  font-weight: 900;
 }
 
 .reveal-loader {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .reveal-loader span {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  background: #f6c945;
+  background: var(--mango-deep);
   animation: loader 700ms ease-in-out infinite alternate;
 }
 
-.reveal-loader span:nth-child(2) {
-  animation-delay: 150ms;
+.reveal-loader span:nth-child(2) { animation-delay: 150ms; }
+.reveal-loader span:nth-child(3) { animation-delay: 300ms; }
+
+/* =====================================================================
+ * カード出現の祝祭オーバーレイ（紙吹雪・マンゴー降下・フラッシュ）
+ * ===================================================================== */
+.celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.reveal-loader span:nth-child(3) {
-  animation-delay: 300ms;
+.celebration__flash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: #fff;
+  animation: flash 600ms ease-out forwards;
+}
+
+.celebration__flash--ssr {
+  background: linear-gradient(135deg, #ffd000, #ff8fb0, #9b5cff, #1fc8c0, #16c47f);
+  animation: flash 900ms ease-out forwards;
+}
+.celebration__flash--sr { background: #fff3c4; }
+
+.celebration__particle {
+  position: absolute;
+  top: -12vh;
+  font-size: 2rem;
+  will-change: transform;
+  animation-name: confetti-fall;
+  animation-timing-function: cubic-bezier(0.3, 0.2, 0.5, 1);
+  animation-fill-mode: forwards;
 }
 
 /* =====================================================================
  * カード詳細モーダル
  * ===================================================================== */
 .detail-dialog {
-  width: min(92vw, 440px);
-  max-width: 440px;
+  width: min(92vw, 460px);
+  max-width: 460px;
+  max-height: 90vh;        /* 画面に収まらない縦長カードはモーダル内でスクロール */
   padding: 0;
-  border: 0;
-  border-radius: 20px;
+  border: 4px solid #fff;
+  border-radius: 22px;
   background: var(--panel);
   color: var(--ink);
-  box-shadow: 0 30px 80px rgba(58, 47, 40, 0.45);
+  box-shadow: 0 30px 80px rgba(180, 90, 0, 0.4);
 }
 
 .detail-dialog::backdrop {
-  background: rgba(58, 47, 40, 0.62);
+  background: rgba(120, 60, 0, 0.55);
   backdrop-filter: blur(3px);
 }
 
 .detail-dialog__content {
   position: relative;
   padding: 18px;
+  max-height: 90vh;
+  overflow-y: auto;   /* 縦長カードはモーダル内でスクロール */
 }
 
 .detail-dialog__close {
@@ -974,40 +1116,35 @@ h2 {
   z-index: 4;
   top: 10px;
   right: 10px;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border: 0;
   border-radius: 50%;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   line-height: 1;
   color: #fff;
-  background: rgba(58, 47, 40, 0.78);
+  background: var(--coral);
   cursor: pointer;
 }
 
-.detail-dialog__close:focus-visible {
-  outline: 3px solid var(--teal);
-  outline-offset: 2px;
-}
+.detail-dialog__close:focus-visible { outline: 3px solid var(--turq); outline-offset: 2px; }
 
 .detail-dialog__frame {
-  aspect-ratio: 1000 / 1400;
   display: grid;
   place-items: center;
   border-radius: 14px;
-  background: #efe7d9;
+  background: #fff4dc;
   overflow: hidden;
 }
 
 .detail-dialog__image {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;          /* PNG本来の縦横比を維持 */
   object-fit: contain;
 }
 
-.detail-dialog__info {
-  padding: 16px 6px 6px;
-}
+.detail-dialog__info { padding: 16px 6px 6px; }
 
 .detail-dialog__topline {
   display: flex;
@@ -1018,19 +1155,20 @@ h2 {
 }
 
 .detail-dialog__count {
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--terracotta);
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: var(--mango-deep);
 }
 
 .detail-dialog__name {
   margin: 0 0 8px;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
+  color: #b5340a;
 }
 
 .detail-dialog__description {
   margin: 0;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--ink-soft);
 }
 
@@ -1038,77 +1176,88 @@ h2 {
  * アニメーション
  * ===================================================================== */
 @keyframes stamp-pulse {
-  0%, 100% {
-    transform: scale(0.97) rotate(-3deg);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.04) rotate(3deg);
-    opacity: 1;
-  }
+  0%, 100% { transform: scale(0.96); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes stamp-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes draw-throb {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+@keyframes decor-bob {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-14px) rotate(5deg); }
 }
 
 @keyframes loader {
-  to {
-    transform: translateY(-12px) scale(1.1);
-    background: var(--terracotta);
-  }
+  to { transform: translateY(-14px) scale(1.15); background: var(--coral); }
 }
 
-@keyframes card-enter {
-  from {
-    opacity: 0;
-    transform: translateY(34px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+@keyframes reveal-shake {
+  0%, 100% { transform: rotate(-12deg) scale(1); }
+  50% { transform: rotate(12deg) scale(1.12); }
+}
+
+@keyframes heading-pop {
+  from { opacity: 0; transform: translateY(14px) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 小さく出てから勢いよく拡大→少しバウンド */
+@keyframes card-pop {
+  0% { opacity: 0; transform: scale(0.2) rotate(-8deg); }
+  60% { opacity: 1; transform: scale(1.08) rotate(3deg); }
+  78% { transform: scale(0.96) rotate(-1.5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes badge-pop {
+  from { opacity: 0; transform: rotate(-8deg) scale(0); }
+  to { opacity: 1; transform: rotate(-8deg) scale(1); }
+}
+
+@keyframes badge-wiggle {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  50% { transform: rotate(-14deg) scale(1.08); }
+}
+
+@keyframes flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) translateX(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(120vh) translateX(var(--drift, 0)) rotate(var(--rot, 360deg)); opacity: 0.9; }
 }
 
 /* =====================================================================
  * レスポンシブ（スマートフォン）
  * ===================================================================== */
 @media (max-width: 760px) {
-  .app-shell {
-    width: min(100% - 22px, 1000px);
-    padding-top: 40px;
-  }
-
-  .status-row {
-    align-items: flex-start;
-  }
-
+  .app-shell { width: min(100% - 18px, 1000px); padding-top: 32px; }
+  .status-row { align-items: flex-start; }
   /* スマホは2列 */
-  .collection-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .probability-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .probability-list { grid-template-columns: repeat(2, 1fr); }
+  /* 装飾が文字に被りすぎないよう小さく・薄く */
+  .bg-decor span { font-size: 1.8rem; opacity: 0.32; }
 }
 
 @media (max-width: 440px) {
-  .status-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .timer {
-    text-align: left;
-  }
-
-  /* 狭い画面は1列でカードを大きく見せる */
-  .collection-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .probability-list {
-    grid-template-columns: 1fr;
-  }
+  .status-row { flex-direction: column; gap: 10px; }
+  /* 狭い画面でもカードは画面幅の90%以内で大きく表示（縦横比は維持） */
+  .photo-card--large { width: 90vw; }
+  .probability-list { grid-template-columns: 1fr; }
 }
 
+/* 動きを抑えたい人向け：激しいアニメーションを減らす */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1118,4 +1267,6 @@ h2 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .bg-decor { display: none; }
 }
