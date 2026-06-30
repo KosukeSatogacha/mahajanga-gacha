@@ -652,7 +652,7 @@ function buildShareText(card) {
   const name = truncateText(card.name, MAX_TWEET_NAME_LENGTH);
 
   let text =
-    "旧マジャンガ州カードガチャで\n" +
+    "旧マジャンガ州マンゴー研究ガチャで\n" +
     `「${name}」【${card.rarity}】を獲得しました！\n\n` +
     `現在のコレクション：${ownedKinds} / ${totalCards}枚`;
 
@@ -1019,12 +1019,10 @@ function updateDrawAvailability() {
   drawButton.disabled = isDrawing;
 
   const buttonMain = drawButton.querySelector(".draw-button__main");
-  const buttonSub = drawButton.querySelector(".draw-button__sub");
 
   setText(drawStatus, T.statusNoLimit);
   drawStatus.className = "status-value status-value--available";
   setText(buttonMain, T.drawButtonReady);
-  setText(buttonSub, T.drawSubReady);
 }
 
 /**

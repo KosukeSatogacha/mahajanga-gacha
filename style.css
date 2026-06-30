@@ -323,21 +323,11 @@ h2 {
   animation: none;
 }
 
-.draw-button__main,
-.draw-button__sub {
-  display: block;
-}
-
 .draw-button__main {
+  display: block;
   font-size: 1.3rem;
   font-weight: 900;
   letter-spacing: 0.02em;
-}
-
-.draw-button__sub {
-  margin-top: 3px;
-  font-size: 0.8rem;
-  opacity: 0.95;
 }
 
 .notice {

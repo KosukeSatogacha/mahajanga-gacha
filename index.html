@@ -16,11 +16,11 @@
     name="description"
     content="マンゴーと南国テンションで楽しむ、旧マジャンガ州のカードガチャ！"
   >
-  <title>🥭旧マジャンガ州マンゴーガチャ🥭</title>
+  <title>🥭旧マジャンガ州マンゴー研究ガチャ🥭</title>
 
   <!-- SNSリンクプレビュー（Open Graph） -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="旧マジャンガ州カードガチャ">
+  <meta property="og:title" content="旧マジャンガ州マンゴー研究ガチャ">
   <meta property="og:description" content="旧マジャンガ州のカードを集めよう！🥭">
   <meta property="og:url" content="https://KosukeSatogacha.github.io/mahajanga-gacha/">
   <!-- プレビュー画像（代表カード）。差し替えたい場合はURLを変更。 -->
@@ -28,17 +28,17 @@
 
   <!-- SNSリンクプレビュー（X / Twitter） -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="旧マジャンガ州カードガチャ">
+  <meta name="twitter:title" content="旧マジャンガ州マンゴー研究ガチャ">
   <meta name="twitter:description" content="旧マジャンガ州のカードを集めよう！🥭">
   <meta name="twitter:image" content="https://KosukeSatogacha.github.io/mahajanga-gacha/assets/cards/%E3%83%87%E3%82%A3%E3%82%A8%E3%82%B4.png">
   <!-- ?v= はキャッシュ対策のバージョン番号。内容を更新したら数字を増やす。 -->
-  <link rel="stylesheet" href="./style.css?v=20260630-2">
+  <link rel="stylesheet" href="./style.css?v=20260630-3">
 
   <!-- Google tag (gtag.js) — GA4 計測ID: G-3YSDL55SS9
        初期化（dataLayer/gtag/config）は CSP のインラインJS禁止方針に合わせて
        外部ファイル analytics.js で行う。ローダー本体だけここで非同期読み込みする。 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3YSDL55SS9"></script>
-  <script src="./analytics.js?v=20260630-2"></script>
+  <script src="./analytics.js?v=20260630-3"></script>
 </head>
 <body>
   <!-- ============ 背景のマンゴー装飾（全部マンゴー！色・大きさ・角度がいろいろ） ============
@@ -50,11 +50,11 @@
     <header class="hero">
       <div class="mango-band" aria-hidden="true">🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭🥭</div>
       <p class="eyebrow">🥭 MAHAJANGA 🥭</p>
-      <h1 id="hero-title">旧マジャンガ州カードガチャ</h1>
-      <p class="hero__subtitle" id="hero-subtitle">マンゴーと南国テンションで全力収集！</p>
-      <p class="hero__free" id="hero-free">無料だよ！</p>
+      <h1 id="hero-title">旧マジャンガ州マンゴー研究ガチャ</h1>
+      <p class="hero__subtitle" id="hero-subtitle">マガスカルの三羽鳥マンゴーゲットを目指してガチャを引こう！</p>
+      <p class="hero__free" id="hero-free">無料でガチャを引けます</p>
       <p class="hero__description" id="hero-description">
-        旧マジャンガ州のカードを集める企画です。
+        マダガスカルの旧マジャンガ州でマンゴーの研究をしている人の話が面白かったのでトレーディングカードにしてみました。マンゴー以外の話もたまに出てきます。
       </p>
     </header>
 
@@ -77,10 +77,9 @@
 
       <button id="draw-button" class="draw-button" type="button">
         <span class="draw-button__main">ガチャを引く！🥭</span>
-        <span class="draw-button__sub">いざ、南国の審判！</span>
       </button>
 
-      <p class="notice" id="notice-text">結果とコレクションはこのブラウザに保存されるよ。</p>
+      <p class="notice" id="notice-text">結果とコレクションはこのブラウザに保存されます。</p>
     </section>
 
     <!-- ============ 抽選結果（大きく表示） ============ -->
@@ -138,7 +137,7 @@
       <div class="section-heading">
         <div>
           <p class="eyebrow">COLLECTION</p>
-          <h2 id="collection-title">コレクション収穫祭🧺</h2>
+          <h2 id="collection-title">収穫したコレクション</h2>
         </div>
         <p id="collection-count" class="collection-count">0 / 0</p>
       </div>
@@ -184,7 +183,7 @@
 
     <!-- ============ 提供割合 ============ -->
     <section class="probability-section" aria-labelledby="probability-title">
-      <h2 id="probability-title">提供割合（マンゴー出現率）</h2>
+      <h2 id="probability-title">カードの割合</h2>
       <div class="probability-list" id="probability-list"></div>
     </section>
 
@@ -209,12 +208,12 @@
       <details class="about-item">
         <summary>🥭 このガチャは何？</summary>
         <p>
-          旧マジャンガ州に関係する場所、人、文化、研究などを、カードとして集める企画です。なぜマンゴーが大量に出てくるのかについては、深く考えないでください。
+          マダガスカルの旧マジャンガ州でマンゴーの研究をしている人の話が面白かったのでトレーディングカードにしてみました。マンゴー以外の話もたまに出てきます。マダガスカルの三羽鳥マンゴーや全種類コンプリートを目指して、ガチャを引いてみてください！
         </p>
       </details>
     </section>
 
-    <footer class="site-footer" id="site-footer">🥭 旧マジャンガ州ガチャ 🥭</footer>
+    <footer class="site-footer" id="site-footer">🥭 旧マジャンガ州マンゴー研究ガチャ 🥭</footer>
     <p class="privacy-note">
       このサイトでは、利用状況の把握と改善のためGoogle Analyticsを使用しています。
     </p>
@@ -253,8 +252,8 @@
   </dialog>
 
   <!-- ?v= はキャッシュ対策。cards.js は script.js より先に読み込む。 -->
-  <script src="./site-config.js?v=20260630-2"></script>
-  <script src="./cards.js?v=20260630-2"></script>
-  <script src="./script.js?v=20260630-2"></script>
+  <script src="./site-config.js?v=20260630-3"></script>
+  <script src="./cards.js?v=20260630-3"></script>
+  <script src="./script.js?v=20260630-3"></script>
 </body>
 </html>
